@@ -1,8 +1,8 @@
-#ifndef Comonuicacao_hpp
-#define Comonuicacao_hpp
+#ifndef Comunicacao_hpp
+#define Comunicacao_hpp
 
 
-class Comonuicacao {
+class Comunicacao {
 
 private:
 

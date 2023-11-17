@@ -19,35 +19,24 @@ int humidade;
 int calor;
 
 void setup() {
-  Serial.begin(9600);
-  // op.setup();
+  Serial.begin(250000);
+  op.setup();
   sensor.setup();
 }
 
+
 void loop() {
 
-  while (true) {
-    op.move_servo(180);
-    // op.tp_servo(55); //56
-    op.liga_led('R');
-    op.liga_led('G');
-    op.liga_led('Y');
-    // delay(1000);
-    op.desliga_led('R');
-    op.desliga_led('G');
-    op.desliga_led('Y');
-    // delay(1000);
-    // op.tp_servo(45);
-    // sensor.ler_gas();
-    // sensor.ler_humidade();
-    // sensor.ler_temperatura();
-    // delay(200);
-    // digitalWrite(10, HIGH);
-    // digitalWrite(11, HIGH);
-    // digitalWrite(12, HIGH);
+  while (true){
+    sensor.ler_gas();
+    sensor.ler_humidade();
+    sensor.ler_temperatura();
+    delay(200);
+    digitalWrite(10, HIGH);
+    digitalWrite(11, HIGH);
+    digitalWrite(12, HIGH);
   }
 
-  Serial.println("Quebrei o Loop");
   //Realiza leituras
   gas = sensor.ler_gas();
   calor = sensor.ler_temperatura();

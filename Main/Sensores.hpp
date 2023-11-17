@@ -6,7 +6,7 @@
 #include <DHT.h>
 #include <DHT_U.h>
 
-const int pino_dht = 11;  //Pino Digital do sensor DHT-11
+const int pino_dht = 9;  //Pino Digital do sensor DHT-11
 const int dhtType = 11;   //Modelo do Sensor DHT
 const int pino_mq2 = A0;  //Pino Analogico do sensor MQ-2
 
