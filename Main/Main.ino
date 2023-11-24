@@ -20,58 +20,38 @@ int calor;
 
 void setup() {
   Serial.begin(9600);
-  // op.setup();
+  op.setup();
   sensor.setup();
 }
 
 void loop() {
 
-  while (true) {
-    op.move_servo(180);
-    // op.tp_servo(55); //56
-    op.liga_led('R');
-    op.liga_led('G');
-    op.liga_led('Y');
-    // delay(1000);
-    op.desliga_led('R');
-    op.desliga_led('G');
-    op.desliga_led('Y');
-    // delay(1000);
-    // op.tp_servo(45);
-    // sensor.ler_gas();
-    // sensor.ler_humidade();
-    // sensor.ler_temperatura();
-    // delay(200);
-    // digitalWrite(10, HIGH);
-    // digitalWrite(11, HIGH);
-    // digitalWrite(12, HIGH);
-  }
-
-  Serial.println("Quebrei o Loop");
   //Realiza leituras
   gas = sensor.ler_gas();
-  calor = sensor.ler_temperatura();
-  humidade = sensor.ler_humidade();
+  delay(200);
 
   //Perigo
-  if (gas > 10) {
-    op.move_servo(100);  //Fecha Gas
-    op.alarme();         //Toca alarme
+  if (gas > 450) {
     op.liga_led('R');
-    op.liga_led('Y');
-    op.liga_led('G');
-
+    op.desliga_led('G');
+    op.desliga_led('Y');
+    op.buzzer();       //Toca alarme
+    delay(2000);
+    op.tp_servo(90);  //Fecha Gas
+    op.buzzer();       //Toca alarme
+    delay(3000);
   }
   //Alerta
-  else if (gas > 5) {
-    op.desliga_led('R');
+  else if (gas > 150) {
     op.liga_led('Y');
-    op.liga_led('G');
+    op.desliga_led('G');
+    op.desliga_led('R');
   }
   //Seguro
   else {
+    op.tp_servo(0);  //Fecha Gas
+    op.liga_led('G');
     op.desliga_led('R');
     op.desliga_led('Y');
-    op.liga_led('G');
   }
 }

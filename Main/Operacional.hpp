@@ -3,6 +3,8 @@
 
 #include <Servo.h>
 
+
+
 Servo servo;  //Cria objeto "servo"
 
 class Operacional {
@@ -12,9 +14,9 @@ private:
   const int buzzer_1 = 2;  // Pino digital do Buzzer 1
   // const int buzzer_2 = 2;  // Pino digital do Buzzer 2
 
-  const int led_red = 10;     // Pino digital do Buzzer 1
-  const int led_green = 12;   // Pino digital do Buzzer 2
-  const int led_yellow = 11;  // Pino digital do Buzzer 1
+  const int led_red = 12;     // Pino digital do Buzzer 1
+  const int led_green = 9;    // Pino digital do Buzzer 2
+  const int led_yellow = 10;  // Pino digital do Buzzer 1
 
 public:
 
@@ -22,8 +24,8 @@ public:
   //Setup geral
   void setup() {
     //Servo
-    servo.attach(6);
-    // servo.write(90);  //Posicao inicial
+    servo.attach(8);
+    servo.write(60);  //Posicao inicial
     //Vermelho
     pinMode(led_red, OUTPUT);
     //Amarelo
@@ -37,31 +39,51 @@ public:
 
   /********************************** BUZZERS ***************************************/
   //Toca um alarme
-  void alarme() {
+  void buzzer(char musica = 'A') {
 
-    for (int i = 0; i < 10; i++) {
-      tone(buzzer_1, 262, 200);  //Pino, frequencia, tempo
-      // tone(buzzer_2, 262, 200);
-      delay(500);
-      tone(buzzer_1, 294, 200);
-      // tone(buzzer_2, 294, 200);
+    //Alarme Padrao
+    if (musica == 'A') {
+      for (int i = 0; i < 10; i++) {
+        tone(buzzer_1, 262, 200);  //Pino, frequencia, tempo
+        // tone(buzzer_2, 262, 200);
+        delay(500);
+        tone(buzzer_1, 294, 200);
+        // tone(buzzer_2, 294, 200);
+      }
+      //Para o som
+      noTone(buzzer_1);
+      // noTone(buzzer_2);
     }
-    //Para o som
-    noTone(buzzer_1);
-    // noTone(buzzer_2);
+
+    //Musica de Zelda
+    if (musica == 'Z') {
+      // Reproduza a música diretamente no loop
+      tone(buzzer_1, 262, 200);
+      delay(250);  // Adiciona um pequeno atraso entre as notas
+      noTone(buzzer_1);
+
+      tone(buzzer_1, 262, 200);
+      delay(250);
+      noTone(buzzer_1);
+
+      tone(buzzer_1, 262, 200);
+      delay(250);
+      noTone(buzzer_1);
+
+      delay(500);  // Adiciona um intervalo entre cada execução da música
+    }
   }
 
   /************************** Servo ****************************/
-  //Movimenta o servo no angulo fornecido
-  void move_servo(int ang) {
-    for (int i = 0; i < ang; i++) {
-      servo.write(i);
-      Serial.println(i);
-      delay(50);
+
+  //Movimenta o servo no angulo ANG com DEL delay
+  void move_servo(int ang, int del = 15) {
+    for (int pos = 0; pos <= ang; pos += 1) {  
+      servo.write(pos);                
+      delay(del);                           
     }
   }
-
-  void tp_servo(int ang){
+  void tp_servo(int ang) {
     servo.write(ang);
   }
 
@@ -85,7 +107,7 @@ public:
     //Verde
     if (c == 'G') digitalWrite(led_green, LOW);
     //Amarelo
-    if (c == 'B') digitalWrite(led_yellow, LOW);
+    if (c == 'Y') digitalWrite(led_yellow, LOW);
   }
 };
 #endif
